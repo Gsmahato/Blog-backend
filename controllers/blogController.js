@@ -31,9 +31,9 @@ exports.getAllBlogsController = async (req, res) => {
 // CREATE BLOG
 exports.createBlogController = async (req, res) => {
   try {
-    const { title, description, content, featured_image, user } = req.body;
+    const { title, description, content, featured_image,category, user } = req.body;
     // validation
-    if (!title || !description || !content || !featured_image || !user) {
+    if (!title || !description || !content || !featured_image || !category || !user) {
       return res.status(400).send({
         success: false,
         message: "Please provide all fields",
@@ -52,6 +52,7 @@ exports.createBlogController = async (req, res) => {
       description,
       content,
       featured_image,
+      category,
       user,
     });
     const session = await mongoose.startSession();
@@ -79,7 +80,7 @@ exports.createBlogController = async (req, res) => {
 exports.updateBlogController = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, content, featured_image } = req.body;
+    const { title, description, content, featured_image,category } = req.body;
     const blog = await blogModel.findByIdAndUpdate(
       id,
       { ...req.body },
