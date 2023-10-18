@@ -28,9 +28,9 @@ exports.getAllNavbarItems = async (req, res) => {
 // CREATE NAVBAR ITEMS
 exports.createNavbarItem = async (req, res) => {
   try {
-    const { title, url } = req.body;
+    const { title} = req.body;
     // validation
-    if (!title || !url) {
+    if (!title) {
       return res.status(400).send({
         success: false,
         message: "Please provide all fields",
@@ -38,7 +38,6 @@ exports.createNavbarItem = async (req, res) => {
     }
     const newItem = new navModel({
       title,
-      url,
     });
     await newItem.save();
     return res.status(201).send({
